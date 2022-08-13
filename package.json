@@ -1,0 +1,25 @@
+{
+  "name": "room-schedule-concordia",
+  "version": "1.0.0",
+  "description": "Website to access the room schedule of Concordia University based in Montréal, QC, Canada, using the open data provided by the university.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/server.js"
+  },
+  "keywords": [
+    "room",
+    "schedule",
+    "concordia",
+    "university",
+    "montreal",
+    "canada",
+    "open",
+    "data"
+  ],
+  "author": "Tigre2325",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
