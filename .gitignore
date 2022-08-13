@@ -1,0 +1,13 @@
+# ignore a single file
+# mycode.class
+
+# ignore an entire directory
+.vscode/
+node_modules/
+
+# ignore a file type
+# *.json
+# *.code-workspace
+
+# add an exception (using !) to the preceding rule to track a specific file
+# !package.json
