@@ -2,24 +2,35 @@
   "name": "room-schedule-concordia",
   "version": "1.0.0",
   "description": "Website to access the room schedule of Concordia University based in Montréal, QC, Canada, using the open data provided by the university.",
-  "main": "server.js",
+  "main": "./room-schedule-concordia/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js"
+    "doc": "jsdoc -c jsdoc.json",
+    "start": "node ./room-schedule-concordia/server.js",
+    "start:dev": "nodemon ./room-schedule-concordia/server.js",
+    "start:testprod": "NODE_ENV=test_production node ./room-schedule-concordia/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
-    "room",
+    "room schedule",
     "schedule",
     "concordia",
     "university",
     "montreal",
     "canada",
-    "open",
-    "data"
+    "open data"
   ],
   "author": "Tigre2325",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.1.2",
+    "jest": "^29.0.1",
+    "jsdoc": "^3.6.11",
+    "nodemon": "^2.0.20"
   }
 }
