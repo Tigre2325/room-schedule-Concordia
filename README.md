@@ -2,11 +2,11 @@
 
 Website to access the room schedule of Concordia University based in Montréal, QC, Canada, using the open data provided by the university.
 
-# Feature
+## Features
 
-## MVP (Minimal Viable Product)
+### MVP (Minimal Viable Product)
 
-### Client
+#### Client
 
 - [ ] Basic responsive HTML/CSS
 - [ ] Interface
@@ -20,11 +20,11 @@ Website to access the room schedule of Concordia University based in Montréal, 
   - [ ] Get selected room data from server
   - [ ] Display room data on webpage
 
-### Server
+#### Server
 
 - [ ] Retrieve data
   - [ ] Get course schedules from Concordia open data api
-  - [ ] Parse api data to obtain information per room
+  - [ ] Parse api data
 - [ ] Data handling
   - [ ] Check for new data
   - [ ] Save/update to database if room schedule changed
@@ -40,32 +40,33 @@ Website to access the room schedule of Concordia University based in Montréal, 
   - [ ] Set NODE_ENV to "production"
   - [ ] Automatic restart
 
-## Later features
+### Later features
 
 - [ ] Filter room availability for given time period
 - [ ] Filter room availability for given duration
 - [ ] Number of people in the room (not accurate, need to rely on students filling form correctly)
 
-# Road map
+## Road map
 
-- [ ] Create mock Concordia open data api
-- [ ] Boiler plate server.js with Express
-- [ ] Get course schedules from mock Concordia open data api
-- [ ] Parse api data to obtain information per room
-- [ ] Send all rooms to client on start
-- [ ] Check for new data
+- [x] Create mock Concordia open data api with Mockoon
+- [x] Boiler plate server.js with Express
+- [ ] Get course schedules from mock Concordia open data api in server
+- [ ] Get course schedules from server api in client
+- [ ] Parse api data
 - [ ] Save/update to database
+- [ ] Send all rooms to client on start
+- [ ] Get all rooms from server
 - [ ] Parse client request to get room
 - [ ] Query database to retrieve room data
 - [ ] Send data to client
 - [ ] Basic responsive HTML/CSS
-- [ ] Get all rooms from server
 - [ ] Navigation to select campus, building, floor, room
 - [ ] Send user selected room to server
 - [ ] Get selected room data from server
 - [ ] Show occupied times for selected room in text
 - [ ] Improve website interface (favicon,font,color,style)
 - [ ] Show occupied times for selected room graphically
+- [ ] Check for new data
 - [ ] Save/update to database if room schedule changed
 - [ ] Get course schedules from Concordia open data api
 - [ ] Ensure app some security
