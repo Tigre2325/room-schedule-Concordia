@@ -1,9 +1,11 @@
 # ignore a single file
 # mycode.class
+.env
 
 # ignore an entire directory
 .vscode/
 node_modules/
+mock-api/
 
 # ignore a file type
 # *.json
