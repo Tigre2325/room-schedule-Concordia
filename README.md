@@ -50,7 +50,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 
 - [x] Create mock Concordia open data api with Mockoon
 - [x] Boiler plate server.js with Express
-- [ ] Get course schedules from mock Concordia open data api in server
+- [x] Get course schedules from mock Concordia open data api in server
 - [ ] Get course schedules from server api in client
 - [ ] Parse api data
 - [ ] Save/update to database
