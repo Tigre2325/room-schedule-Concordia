@@ -15,7 +15,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [ ] JS
   - [x] Get all rooms from server
   - [x] Fill dependent dropdowns using all rooms
-  - [ ] Send user selected room to server
+  - [x] Send user selected room to server
   - [ ] Get selected room data from server
   - [ ] Display room data on webpage
 
@@ -55,16 +55,16 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [x] Send all rooms to client on start
 - [x] Get all rooms from server
 - [x] Fill dependent dropdowns using all rooms
+- [x] Send user selected room to server
 - [ ] Parse client request to get room
 - [ ] Query database to retrieve room data
 - [ ] Send data to client
-- [ ] Basic responsive HTML/CSS
-- [ ] Navigation to select campus, building, floor, room
-- [ ] Send user selected room to server
 - [ ] Get selected room data from server
 - [ ] Show occupied times for selected room in text
-- [ ] Improve website interface (favicon,font,color,style)
+- [ ] Basic responsive HTML/CSS
 - [ ] Show occupied times for selected room graphically
+- [ ] Improve website interface (favicon, font, color, style)
+- [ ] Navigation to select campus, building, floor, room
 - [ ] Check for new data
 - [ ] Save/update to database if room schedule changed
 - [ ] Get course schedules from Concordia open data api
