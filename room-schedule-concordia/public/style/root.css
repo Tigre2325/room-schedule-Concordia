@@ -1,0 +1,5 @@
+:root {
+  --font-family-title: Georgia, "Times New Roman", Times, serif;
+  --font-family-text: Arial, Helvetica, sans-serif;
+  font-family: var(--font-family-text);
+}

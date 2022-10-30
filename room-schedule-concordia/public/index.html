@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta name="color-scheme" content="light dark" /> -->
+    <title>Room Schedule Concordia University</title>
+    <link rel="stylesheet" href="./style/style.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"
+    ></script>
+    <script defer src="./js/client.js"></script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Concordia University</h1>
+    </header>
+    <h2>Search a room</h2>
+    <form id="form-room">
+      <div>
+        <label for="dropdown-campus">Campus</label>
+        <select required id="dropdown-campus" name="locationCode">
+          <option value="" selected>Select a campus</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="dropdown-building">Building</label>
+        <select required id="dropdown-building" name="buildingCode">
+          <option value="" selected>Select a campus first</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="dropdown-room">Room</label>
+        <select required id="dropdown-room" name="room">
+          <option value="" selected>Select a building first</option>
+        </select>
+      </div>
+      <div>
+        <input type="submit" value="Search room" />
+      </div>
+    </form>
+  </body>
+</html>
