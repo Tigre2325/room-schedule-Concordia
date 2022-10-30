@@ -14,6 +14,7 @@ require("dotenv").config({
 
 // Local modules and packages
 const concordia = require("./services/concordia");
+const { parseCourses } = require("./models/parseCourses");
 
 //------------------------------------------------------------------------------
 // Setting the application
@@ -38,13 +39,21 @@ app.use("/", indexRouter);
 async function main() {
   // TODO: check when was the last time data was retrieved
   // Call to the Concordia api on server start
+
   try {
     const [buildings, coursesConcordia] = await Promise.all([
       concordia.getBuildingList(),
       concordia.getCourseSchedules(),
     ]);
-    console.log({ buildings });
-    console.log({ coursesConcordia });
+
+    // Parse data from the api
+    const { rooms, coursesCurrentTerm } = await parseCourses(
+      coursesConcordia,
+      buildings
+    );
+
+    console.log({ rooms });
+    console.log({ coursesCurrentTerm });
   } catch (err) {
     // TODO: Retry later
     console.error("Could not get buildings and courses");
