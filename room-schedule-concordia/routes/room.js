@@ -16,6 +16,7 @@ const router = express.Router();
 
 // Model
 const dbRoom = require("../models/Room");
+const dbCourse = require("../models/Course");
 
 //------------------------------------------------------------------------------
 // Functions
@@ -76,6 +77,21 @@ async function returnRoomsObj(dbRoom) {
 router.get("/", async (req, res) => {
   const roomsObj = await returnRoomsObj(dbRoom);
   res.send(roomsObj);
+});
+
+// Individual room route
+router.post("/room", async (req, res) => {
+  const searchOptions = {};
+
+  searchOptions.locationCode = req.body.locationCode;
+  searchOptions.buildingCode = req.body.buildingCode;
+  searchOptions.room = req.body.room;
+  try {
+    const courses = await dbCourse.find(searchOptions);
+    res.send(courses);
+  } catch {
+    res.status(404);
+  }
 });
 
 module.exports = router;
