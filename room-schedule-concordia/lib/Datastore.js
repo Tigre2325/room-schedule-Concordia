@@ -66,7 +66,7 @@ class Datastore {
   /**
    * Find records with exact match using filtering system.
    * @param {object} filterProperties - Object containing the properties to filter the data.
-   * @returns {Promise<Object>} The filtered records.
+   * @returns {Promise<object>} The filtered records.
    */
   async find(filterProperties) {
     const filteredRecords = this.data.filter((record) => {

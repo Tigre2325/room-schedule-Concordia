@@ -34,6 +34,8 @@ const dbCourse = require("./models/Course");
 // Routes
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
+const roomRouter = require("./routes/room");
+app.use("/", roomRouter);
 
 //------------------------------------------------------------------------------
 // Main

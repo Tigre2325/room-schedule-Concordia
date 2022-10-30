@@ -28,7 +28,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [ ] Data handling
   - [ ] Check for new data
   - [ ] Save/update to database if room schedule changed
-- [ ] Send all rooms to client on start
+- [x] Send all rooms to client on start
 - [ ] Room request
   - [ ] Parse client request to get room
   - [ ] Query database to retrieve room data
@@ -53,7 +53,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [x] Get course schedules from mock Concordia open data api in server
 - [x] Parse Concordia api data
 - [x] Save/update to database
-- [ ] Send all rooms to client on start
+- [x] Send all rooms to client on start
 - [ ] Get all rooms from server
 - [ ] Parse client request to get room
 - [ ] Query database to retrieve room data
