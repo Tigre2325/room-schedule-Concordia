@@ -28,6 +28,8 @@ app.use(express.urlencoded({ extended: false }));
 // Global variables
 
 // Models
+const dbRoom = require("./models/Room");
+const dbCourse = require("./models/Course");
 
 // Routes
 const indexRouter = require("./routes/index");
@@ -54,6 +56,16 @@ async function main() {
 
     console.log({ rooms });
     console.log({ coursesCurrentTerm });
+
+    // Initialize `dbRoom`
+    await dbRoom.loadDatabase();
+    dbRoom.data = rooms;
+    await dbRoom.writeDatabase(rooms);
+
+    // Initialize `dbCourse`
+    await dbCourse.loadDatabase();
+    dbCourse.data = coursesCurrentTerm;
+    await dbCourse.writeDatabase(coursesCurrentTerm);
   } catch (err) {
     // TODO: Retry later
     console.error("Could not get buildings and courses");

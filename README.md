@@ -52,7 +52,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [x] Boiler plate server.js with Express
 - [x] Get course schedules from mock Concordia open data api in server
 - [x] Parse Concordia api data
-- [ ] Save/update to database
+- [x] Save/update to database
 - [ ] Send all rooms to client on start
 - [ ] Get all rooms from server
 - [ ] Parse client request to get room
