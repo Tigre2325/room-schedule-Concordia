@@ -58,8 +58,10 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [x] Parse client request to get room
 - [x] Query database to retrieve room data
 - [x] Send data to client
+- [x] Show occupied times for selected room graphically: hardcoded
+- [ ] Show occupied times for selected room graphically: using server response
 - [ ] Basic responsive HTML/CSS
-- [ ] Show occupied times for selected room graphically
+- [ ] Publish website for beta testing
 - [ ] Improve website interface (favicon, font, color, style)
 - [ ] Navigation to select campus, building, floor, room
 - [ ] Check for new data

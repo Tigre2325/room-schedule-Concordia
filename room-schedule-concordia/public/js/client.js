@@ -4,26 +4,6 @@
 // Global variables
 
 // HTML Elements
-/**
- * The campus dropdown.
- * @type {HTMLSelectElement}
- */
-// @ts-ignore
-const dropdownCampus = document.getElementById("dropdown-campus");
-
-/**
- * The building dropdown.
- * @type {HTMLSelectElement}
- */
-// @ts-ignore
-const dropdownBuilding = document.getElementById("dropdown-building");
-
-/**
- * The room dropdown.
- * @type {HTMLSelectElement}
- */
-// @ts-ignore
-const dropdownRoom = document.getElementById("dropdown-room");
 
 /**
  * The form to get the room.
@@ -81,6 +61,27 @@ async function getRooms() {
  * ```
  */
 async function setupFormDropdowns(roomsObj) {
+  /**
+   * The campus dropdown.
+   * @type {HTMLSelectElement}
+   */
+  // @ts-ignore
+  const dropdownCampus = document.getElementById("dropdown-campus");
+
+  /**
+   * The building dropdown.
+   * @type {HTMLSelectElement}
+   */
+  // @ts-ignore
+  const dropdownBuilding = document.getElementById("dropdown-building");
+
+  /**
+   * The room dropdown.
+   * @type {HTMLSelectElement}
+   */
+  // @ts-ignore
+  const dropdownRoom = document.getElementById("dropdown-room");
+
   for (let campus in roomsObj) {
     dropdownCampus.options[dropdownCampus.options.length] = new Option(
       campus,
@@ -155,12 +156,12 @@ async function postSelectedRoom(locationCode, buildingCode, room) {
 //------------------------------------------------------------------------------
 // Main
 
-window.onload = async function () {
-  const roomsObj = await getRooms();
-  console.log({ roomsObj });
+// window.onload = async function () {
+//   const roomsObj = await getRooms();
+//   console.log({ roomsObj });
 
-  await setupFormDropdowns(roomsObj);
-};
+//   await setupFormDropdowns(roomsObj);
+// };
 
 formRoom.onsubmit = async function (ev) {
   ev.preventDefault();

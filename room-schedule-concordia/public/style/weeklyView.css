@@ -1,0 +1,49 @@
+table,
+th,
+td {
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+thead {
+  background-color: black;
+  border: 1px solid black;
+  color: white;
+  height: 2rem;
+}
+
+tbody td {
+  border: 1px solid grey;
+}
+
+tbody tr:nth-child(even) {
+  background-color: darkgrey;
+}
+
+td {
+  height: 1rem;
+  text-align: center;
+}
+
+td.time-hour {
+  background-color: lightgrey;
+}
+
+td.time-hour span {
+  writing-mode: tb;
+  transform: rotate(180deg);
+  vertical-align: middle;
+}
+
+th.day {
+  width: calc(100% / 7);
+}
+
+.course {
+  background-color: green;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
