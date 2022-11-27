@@ -1,6 +1,7 @@
 # ignore a single file
 # mycode.class
 .env
+sandbox.*
 
 # ignore an entire directory
 .vscode/

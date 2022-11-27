@@ -35,7 +35,7 @@ const dbCourse = require("./models/Course");
 const indexRouter = require("./routes/index");
 app.use("/", indexRouter);
 const roomRouter = require("./routes/room");
-app.use("/", roomRouter);
+app.use("/rooms", roomRouter);
 
 //------------------------------------------------------------------------------
 // Main
@@ -55,9 +55,6 @@ async function main() {
       coursesConcordia,
       buildings
     );
-
-    console.log({ rooms });
-    console.log({ coursesCurrentTerm });
 
     // Initialize `dbRoom`
     await dbRoom.loadDatabase();
