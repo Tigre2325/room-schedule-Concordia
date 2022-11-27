@@ -6,10 +6,10 @@
 // HTML Elements
 /**
  * The table with the room schedule.
- * @type {HTMLTableElement}
+ * @type HTMLTableElement
  */
 // @ts-ignore
-const tableRoomSchedule = document.getElementById("room-schedule");
+const tableRoomSchedule = document.getElementById("week-schedule");
 
 const daysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const daysLong = [
@@ -194,7 +194,7 @@ async function displayCourse(course) {
     );
 
     /**
-     * @type {HTMLTableCellElement}
+     * @type HTMLTableCellElement
      */
     // @ts-ignore
     const cell = document.getElementById(
@@ -202,7 +202,7 @@ async function displayCourse(course) {
     );
     cell.rowSpan = rowSpan;
     cell.innerHTML = `<span>${course.subject} ${course.catalog}</span>`;
-    cell.className += " course";
+    cell.classList.add("course");
 
     for (let j = 1; j < rowSpan; j++) {
       const removeMinutes =
@@ -218,85 +218,3 @@ async function displayCourse(course) {
     }
   }
 }
-
-//------------------------------------------------------------------------------
-// Main
-
-/**
- * @type {CourseConcordia[]}
- */
-const courses = [
-  {
-    subject: "ENGR",
-    catalog: 244,
-    section: "CC",
-    componentDescription: "Lecture",
-    courseTitle: "MECHANICS OF MATERIALS",
-    locationCode: "SGW",
-    buildingCode: "H",
-    room: "620",
-    classStartTime: 885,
-    classEndTime: 1035,
-    mondays: true,
-    tuesdays: false,
-    wednesdays: true,
-    thursdays: false,
-    fridays: false,
-    saturdays: false,
-    sundays: false,
-    career: "Undergraduate",
-    departmentDescription: "Centre for Engineer in Society",
-    facultyDescription: "Gina Cody School of Engineering & Computer Science",
-  },
-  {
-    subject: "ENGR",
-    catalog: 244,
-    section: "CCAE",
-    componentDescription: "Tutorial",
-    courseTitle: "MECHANICS OF MATERIALS",
-    locationCode: "SGW",
-    buildingCode: "H",
-    room: "520",
-    classStartTime: 585,
-    classEndTime: 670,
-    mondays: true,
-    tuesdays: false,
-    wednesdays: true,
-    thursdays: false,
-    fridays: false,
-    saturdays: false,
-    sundays: false,
-    career: "Undergraduate",
-    departmentDescription: "Centre for Engineer in Society",
-    facultyDescription: "Gina Cody School of Engineering & Computer Science",
-  },
-  {
-    subject: "CLAS",
-    catalog: 265,
-    section: "AA",
-    componentDescription: "Lecture",
-    courseTitle: "MYTH ANCIENT MEDITERRANEAN",
-    locationCode: "SGW",
-    buildingCode: "MB",
-    room: "S2.110",
-    classStartTime: 505,
-    classEndTime: 580,
-    mondays: false,
-    tuesdays: true,
-    wednesdays: false,
-    thursdays: false,
-    fridays: false,
-    saturdays: false,
-    sundays: false,
-    career: "Undergraduate",
-    departmentDescription: "Classics, Mod Lang&Linguistics",
-    facultyDescription: "Faculty of Arts & Science",
-  },
-];
-
-window.onload = async function () {
-  await generateTableRoomSchedule();
-  for (const course of courses) {
-    await displayCourse(course);
-  }
-};

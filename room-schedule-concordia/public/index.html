@@ -19,39 +19,51 @@
     <header>
       <h1>Concordia University</h1>
     </header>
-    <h2>Search a room</h2>
-    <form id="form-room">
-      <div>
-        <label for="dropdown-campus">Campus</label>
-        <select required id="dropdown-campus" name="locationCode">
-          <option value="" selected>Select a campus</option>
-        </select>
-      </div>
 
-      <div>
-        <label for="dropdown-building">Building</label>
-        <select required id="dropdown-building" name="buildingCode">
-          <option value="" selected>Select a campus first</option>
-        </select>
-      </div>
+    <section id="room-search">
+      <h2>Search a room</h2>
 
-      <div>
-        <label for="dropdown-room">Room</label>
-        <select required id="dropdown-room" name="room">
-          <option value="" selected>Select a building first</option>
-        </select>
-      </div>
-      <div>
-        <input type="submit" value="Search room" />
-      </div>
-    </form>
+      <form id="form-room">
+        <div>
+          <label for="dropdown-campus">Campus</label>
+          <select required id="dropdown-campus" name="locationCode">
+            <option value="" selected>Select a campus</option>
+          </select>
+        </div>
 
-    <h2>Weekly schedule of <span>buildingCode</span><span>room</span></h2>
-    <p>
-      Find below the weekly schedule of <span>buildingCode</span
-      ><span>room</span> on <span>locationCode</span> campus.
-    </p>
+        <div>
+          <label for="dropdown-building">Building</label>
+          <select required id="dropdown-building" name="buildingCode">
+            <option value="" selected>Select a campus first</option>
+          </select>
+        </div>
 
-    <table id="room-schedule"></table>
+        <div>
+          <label for="dropdown-room">Room</label>
+          <select required id="dropdown-room" name="room">
+            <option value="" selected>Select a building first</option>
+          </select>
+        </div>
+        <div>
+          <input type="submit" value="Search room" />
+        </div>
+      </form>
+    </section>
+
+    <section id="weekly-view">
+      <h2>
+        Weekly schedule of <span class="buildingCode">buildingCode</span
+        ><span class="room">room</span>
+      </h2>
+
+      <p>
+        Find below the weekly schedule of
+        <span class="buildingCode">buildingCode</span
+        ><span class="room">room</span> on
+        <span class="locationCode">locationCode</span> campus.
+      </p>
+
+      <table id="week-schedule"></table>
+    </section>
   </body>
 </html>

@@ -7,7 +7,7 @@
 
 /**
  * The form to get the room.
- * @type {HTMLFormElement}
+ * @type HTMLFormElement
  */
 // @ts-ignore
 const formRoom = document.forms["form-room"];
@@ -63,21 +63,21 @@ async function getRooms() {
 async function setupFormDropdowns(roomsObj) {
   /**
    * The campus dropdown.
-   * @type {HTMLSelectElement}
+   * @type HTMLSelectElement
    */
   // @ts-ignore
   const dropdownCampus = document.getElementById("dropdown-campus");
 
   /**
    * The building dropdown.
-   * @type {HTMLSelectElement}
+   * @type HTMLSelectElement
    */
   // @ts-ignore
   const dropdownBuilding = document.getElementById("dropdown-building");
 
   /**
    * The room dropdown.
-   * @type {HTMLSelectElement}
+   * @type HTMLSelectElement
    */
   // @ts-ignore
   const dropdownRoom = document.getElementById("dropdown-room");
@@ -153,28 +153,67 @@ async function postSelectedRoom(locationCode, buildingCode, room) {
   }
 }
 
+async function showSection(id) {
+  const section = document.getElementById(id);
+
+  // @ts-ignore
+  section.style.display = "block";
+}
+
+async function showSelectedRoom(locationCode, buildingCode, room) {
+  const locationCodes = document.getElementsByClassName("locationCode");
+  const buildingCodes = document.getElementsByClassName("buildingCode");
+  const rooms = document.getElementsByClassName("room");
+
+  for (const span of locationCodes) {
+    span.textContent = locationCode;
+  }
+  for (const span of buildingCodes) {
+    span.textContent = buildingCode;
+  }
+  for (const span of rooms) {
+    span.textContent = room;
+  }
+}
+
 //------------------------------------------------------------------------------
 // Main
 
-// window.onload = async function () {
-//   const roomsObj = await getRooms();
-//   console.log({ roomsObj });
+window.onload = async function () {
+  const roomsObj = await getRooms();
 
-//   await setupFormDropdowns(roomsObj);
-// };
+  await setupFormDropdowns(roomsObj);
+};
 
 formRoom.onsubmit = async function (ev) {
   ev.preventDefault();
 
   const formData = new FormData(formRoom);
+  /**
+   * @type string
+   */
+  // @ts-ignore
   const locationCode = formData.get("locationCode");
+  /**
+   * @type string
+   */
+  // @ts-ignore
   const buildingCode = formData.get("buildingCode");
+  /**
+   * @type string
+   */
+  // @ts-ignore
   const room = formData.get("room");
 
+  await showSection("weekly-view");
+  await showSelectedRoom(locationCode, buildingCode, room);
+
   try {
-    // @ts-ignore
+    await generateTableRoomSchedule();
     const courses = await postSelectedRoom(locationCode, buildingCode, room);
-    console.log({ courses });
+    for (const course of courses) {
+      await displayCourse(course);
+    }
   } catch (err) {
     console.error(err);
     // TODO: show an error message in the browser

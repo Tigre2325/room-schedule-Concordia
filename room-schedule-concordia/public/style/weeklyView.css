@@ -1,3 +1,7 @@
+section#weekly-view {
+  display: none;
+}
+
 table,
 th,
 td {
@@ -9,18 +13,22 @@ table {
 }
 
 thead {
-  background-color: black;
-  border: 1px solid black;
-  color: white;
+  background-color: hsl(0, 0%, 0%);
+  border-inline: 1px solid hsl(0, 0%, 0%);
+  color: hsl(0, 0%, 100%);
   height: 2rem;
+}
+thead {
+  position: sticky;
+  top: 0;
 }
 
 tbody td {
-  border: 1px solid grey;
+  border: 1px solid hsl(0, 0%, 50%);
 }
 
 tbody tr:nth-child(even) {
-  background-color: darkgrey;
+  background-color: hsl(0, 0%, 66%);
 }
 
 td {
@@ -29,7 +37,7 @@ td {
 }
 
 td.time-hour {
-  background-color: lightgrey;
+  background-color: hsl(0, 0%, 83%);
 }
 
 td.time-hour span {
@@ -43,7 +51,7 @@ th.day {
 }
 
 .course {
-  background-color: green;
+  background-color: hsl(120, 100%, 30%);
   font-weight: bold;
   font-size: 0.8rem;
 }
