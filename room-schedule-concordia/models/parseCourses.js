@@ -19,11 +19,11 @@ let currentDate = new Date();
  * Course object received from the Concordia api.
  * https://opendata.concordia.ca/API/v1/course/schedule/filter/{courseId}/{subject}/{catalog}
  * @typedef {Object} CourseConcordia
- * @property {string} courseID - 6 digit Course Identification Number.
- * @property {string} [termCode] - 4 digit term code.
+ * @property {string|number|any} courseID - 6 digit Course Identification number.
+ * @property {string} termCode - 4 digit term code.
  * @property {string} [session] - A term can be broken down into separate sessions.
  * @property {string} subject - 4 character subject code (e.g. ENGL, HIST, COMM).
- * @property {string|Number|any} catalog - 3 or 4 digit catalog number.
+ * @property {string|number|any} catalog - 3 or 4 digit catalog number.
  * @property {string} section - The specific section letter or number of the scheduled class.
  * @property {string} [componentCode] - 3 character code related to the component type (e.g. LEC, TUT, LAB).
  * @property {string} componentDescription - Description of component code (e.g. Lecture, Tutorial, Laboratory).
@@ -40,8 +40,9 @@ let currentDate = new Date();
  * @property {string} roomCode - This is the overall code for the room that the class is assigned to. It comprises the building code and room number.
  * @property {string} buildingCode - The building code the class is assigned to.
  * @property {string} room - The room number that the class is assigned to.
- * @property {string|Number|any} classStartTime - Class start time.
- * @property {string|Number|any} classEndTime - Class end time.
+ * @property {string|number|any} classStartTime - Class start time.
+ * @property {string|number|any} classEndTime - Class end time.
+ * @property {string|boolean} [modays] - Mondays (this is a typo in the API response).
  * @property {string|boolean} mondays - Mondays.
  * @property {string|boolean} tuesdays - Tuesdays.
  * @property {string|boolean} wednesdays - Wednesdays.
@@ -105,10 +106,11 @@ async function parseClassDate(date) {
 /**
  * Check a course: is it in the current term? Are its class times defined? Is it
  * located in a building? Is the section not cancelled?
- * @param {CourseConcordia} course - A course to check
+ * @param {CourseConcordia} course - A course to check.
+ * @param {Building[]} buildings - The array of Concordia's building.
  * @returns {Promise<boolean>} A boolean indicating if the course is valid
  */
-async function checkCourse(course) {
+async function checkCourse(course, buildings) {
   // Filter out `endTermDate < currentDate || startTermDate < currentDate + 7 days`
   // (to have schedule of next week)
   // TODO: Check if this works with classes that happen on only 1 day
@@ -122,7 +124,11 @@ async function checkCourse(course) {
     course.classStartTime !== "00.00.00" || course.classEndTime !== "00.00.00";
 
   // Filter out `buildingCode === ""`
-  const isBuildingNotEmpty = course.buildingCode !== "";
+  const isBuildingInList = buildings.some(
+    (building) => building.Building === course.buildingCode
+  );
+
+  const isRoomDefined = !Boolean(course.room.match(/(TBA|REMOTE)/));
 
   // Filter out cancelled sections
   const isSectionNotCanceled =
@@ -131,7 +137,8 @@ async function checkCourse(course) {
   const isCourseValid =
     isCurrentWeek &&
     isClassTimeDefined &&
-    isBuildingNotEmpty &&
+    isBuildingInList &&
+    isRoomDefined &&
     isSectionNotCanceled;
 
   return isCourseValid;
@@ -142,7 +149,6 @@ async function checkCourse(course) {
  * @param {CourseConcordia} course - A course to delete its unused properties.
  */
 async function deleteUnusedProperties(course) {
-  delete course.termCode;
   delete course.session;
   delete course.componentCode;
   delete course.classNumber;
@@ -167,16 +173,19 @@ async function deleteUnusedProperties(course) {
  */
 async function updateDataTypes(course, buildings) {
   // Course catalog is a number
+  // course.courseID = Number.parseInt(course.courseID);
+  // course.termCode = Number.parseInt(course.termCode);
   course.catalog = Number.parseInt(course.catalog);
+
+  // course.room = course.roomCode.replace(course.buildingCode, "");
 
   // Update the campus as some courses are `locationCode=ONL` and have a
   // building defined
-  for (const building of buildings) {
-    if (building.Building === course.buildingCode) {
-      course.locationCode = building.Campus;
-      break;
-    }
-  }
+  const courseBuilding = buildings.find(
+    (build) => build.Building === course.buildingCode
+  );
+  course.locationCode =
+    courseBuilding != undefined ? courseBuilding.Campus : "";
 
   // Change class times to minutes since 12:00 am, e.g. 2 am = 120 and
   // 1:15 pm = 13 * 60 + 15 = 780 + 15 = 795)
@@ -188,7 +197,10 @@ async function updateDataTypes(course, buildings) {
     Number.parseInt(classEndHour) * 60 + Number.parseInt(classEndMinute);
 
   // Change the class days to boolean instead of strings
-  course.mondays = course.mondays === "Y" ? true : false;
+  if (!course.mondays) {
+    course.mondays = course.modays === "Y" ? true : false;
+    delete course.modays;
+  }
   course.tuesdays = course.tuesdays === "Y" ? true : false;
   course.wednesdays = course.wednesdays === "Y" ? true : false;
   course.thursdays = course.thursdays === "Y" ? true : false;
@@ -214,7 +226,7 @@ async function parseCourse(course, buildings) {
   ]);
 
   // if course is not valid, go to the next one
-  const isCourseValid = await checkCourse(course);
+  const isCourseValid = await checkCourse(course, buildings);
   if (!isCourseValid) return Promise.reject("Course not valid");
 
   // Delete data that are not needed
@@ -270,7 +282,7 @@ async function parseCourses(courses, buildings) {
     });
 
     const promisesRoomSet = await Promise.allSettled(
-      courses.map(async (course) => {
+      coursesCurrentTerm.map(async (course) => {
         return await addToRoomSet(course);
       })
     );
@@ -283,8 +295,26 @@ async function parseCourses(courses, buildings) {
     console.error(err);
   }
 
+  /**
+   * @type Room[]
+   */
   const rooms = [];
   roomSet.forEach((room) => rooms.push(JSON.parse(room)));
+
+  // Sort the set of rooms: not the best sort but good enough for MVP
+  /*
+    Not the best sort as the floors are not well sorted depending on the
+    building, but it is good enough for MVP.
+  */
+  rooms.sort((room1, room2) => {
+    if (room1.locationCode !== room2.locationCode) {
+      return room1.locationCode.localeCompare(room2.locationCode);
+    }
+    if (room1.buildingCode !== room2.buildingCode) {
+      return room1.buildingCode.localeCompare(room2.buildingCode);
+    }
+    return room1.room.localeCompare(room2.room);
+  });
 
   return { rooms, coursesCurrentTerm };
 }
