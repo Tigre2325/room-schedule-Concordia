@@ -8,9 +8,11 @@ const fs = require("node:fs");
 // Third-party modules and packages
 
 // Local modules and packages
+const AWS = require("aws-sdk");
 
 //------------------------------------------------------------------------------
 // Global variables
+const s3 = new AWS.S3();
 
 //------------------------------------------------------------------------------
 // Functions
@@ -34,11 +36,45 @@ class Datastore {
 
     this.filePath = filePath;
 
-    try {
-      fs.accessSync(this.filePath);
-    } catch (err) {
-      fs.writeFileSync(this.filePath, "[]");
-    }
+    // try {
+    //   fs.accessSync(this.filePath)
+    // } catch (err) {
+    //   fs.writeFileSync(this.filePath, "[]");
+    // }
+    // @ts-ignore
+    const paramsHead = {
+      Bucket: process.env.BUCKET,
+      Key: this.filePath,
+    };
+    // @ts-ignore
+    s3.headBucket(paramsHead, (err, data) => {
+      if (err) {
+        console.log(
+          `Creating empty body for bucket with key "${this.filePath}"`
+        );
+
+        // Create an empty body
+        const paramsPut = {
+          Body: "[]",
+          Bucket: process.env.BUCKET,
+          Key: this.filePath,
+        };
+        // @ts-ignore
+        s3.putObject(paramsPut, (err, data) => {
+          if (err) {
+            console.log(err, err.stack);
+          } else {
+            console.log(
+              `Successfull creation of empty body for "${this.filePath}"`
+            );
+            console.log(data);
+          }
+        });
+      } else {
+        console.log(`Successfull access to "${this.filePath}"`);
+        console.log(data);
+      }
+    });
   }
 
   /**
@@ -46,9 +82,18 @@ class Datastore {
    */
   async loadDatabase() {
     try {
-      const fileContents = await fs.promises.readFile(this.filePath, "utf8");
-      this.data = JSON.parse(fileContents);
+      // const fileContents = await fs.promises.readFile(this.filePath, "utf8");
+      // @ts-ignore
+      const s3File = await s3
+        .getObject({
+          Bucket: process.env.BUCKET,
+          Key: this.filePath,
+        })
+        .promise();
+      // @ts-ignore
+      this.data = JSON.parse(s3File.Body);
     } catch (err) {
+      console.error(`ERROR in 'loadDatabase()' with ${this.filePath}:`);
       console.error(err);
     }
   }
@@ -59,8 +104,16 @@ class Datastore {
    * @returns {Promise} Promise to write the data.
    */
   async writeDatabase(data) {
-    const json = JSON.stringify(data, null, 2);
-    return fs.promises.writeFile(this.filePath, json);
+    const json = JSON.stringify(data);
+    // return fs.promises.writeFile(this.filePath, json);
+    // @ts-ignore
+    return s3
+      .putObject({
+        Body: json,
+        Bucket: process.env.BUCKET,
+        Key: this.filePath,
+      })
+      .promise();
   }
 
   /**
@@ -69,6 +122,10 @@ class Datastore {
    * @returns {Promise<object>} The filtered records.
    */
   async find(filterProperties) {
+    if (!typeof this.data) {
+      await this.loadDatabase();
+    }
+
     const filteredRecords = this.data.filter((record) => {
       // Assume the record is found
       let found = true;

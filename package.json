@@ -23,6 +23,7 @@
   "author": "Tigre2325",
   "license": "MIT",
   "dependencies": {
+    "aws-sdk": "^2.1267.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.1"

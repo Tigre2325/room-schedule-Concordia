@@ -75,8 +75,14 @@ async function returnRoomsObj(dbRoom) {
 
 // All rooms route
 router.get("/", async (req, res) => {
-  const roomsObj = await returnRoomsObj(dbRoom);
-  res.send(roomsObj);
+  try {
+    const roomsObj = await returnRoomsObj(dbRoom);
+    res.send(roomsObj);
+  } catch (err) {
+    console.error("ERROR in GET /room");
+    console.error(err);
+    res.status(404);
+  }
 });
 
 // Individual room route

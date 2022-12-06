@@ -15,10 +15,10 @@ const axios = require("axios").default;
 /**
  * Facade function for a get request.
  * @param {string} url - The request url
- * @param {object} params - The request parameters
+ * @param {object} [params] - The request parameters
  * @returns {Promise}
  */
-async function get(url, params) {
+async function get(url, params = undefined) {
   return await axios.get(url, params);
 }
 

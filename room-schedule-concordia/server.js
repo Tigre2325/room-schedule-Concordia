@@ -47,7 +47,7 @@ async function main() {
   try {
     const [buildings, coursesConcordia] = await Promise.all([
       concordia.getBuildingList(),
-      concordia.getCourseSchedules(),
+      concordia.getCourseSchedules("2222"), // FIXME: change to be dynamic
     ]);
 
     // Parse data from the api
@@ -60,11 +60,13 @@ async function main() {
     await dbRoom.loadDatabase();
     dbRoom.data = rooms;
     await dbRoom.writeDatabase(rooms);
+    console.log("dbRoom ok");
 
     // Initialize `dbCourse`
     await dbCourse.loadDatabase();
     dbCourse.data = coursesCurrentTerm;
     await dbCourse.writeDatabase(coursesCurrentTerm);
+    console.log("dbCourse ok");
   } catch (err) {
     // TODO: Retry later
     console.error("Could not get buildings and courses");
@@ -78,4 +80,6 @@ app.listen(process.env.PORT, async () => {
   }
 
   await main();
+
+  console.log("'main()' finished.");
 });
