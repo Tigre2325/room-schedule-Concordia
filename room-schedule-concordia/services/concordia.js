@@ -51,19 +51,13 @@ async function getBuildingList() {
 
 /**
  * Get the course schedules from the Concordia api.
- * @param {string} courseId - 6 digit Course Identification Number.
- * @param {string} subject - 4 character subject code (e.g. ENGL, HIST, COMM).
- * @param {string} catalog - 3 or 4 digit catalog number.
+ * @param {string|number} termCode - 4 digit term code.
+ * @param {string} [subject="*"] - 4 character subject code (e.g. ENGL, HIST, COMM).
  * @returns {Promise<object>}
  */
-async function getCourseSchedules(
-  courseId = "*",
-  subject = "*",
-  catalog = "*"
-) {
+async function getCourseSchedules(termCode, subject = "*") {
   subject.toString();
-  catalog.toString();
-  const endPoint = `course/schedule/filter/${courseId}/${subject}/${catalog}`;
+  const endPoint = `course/scheduleTerm/filter/${subject}/${termCode}`;
   const apiUrl = API_BASE_URL + endPoint;
   try {
     const res = await httpClient.get(apiUrl, { auth: auth });
