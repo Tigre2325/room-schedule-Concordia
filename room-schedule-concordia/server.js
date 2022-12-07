@@ -57,13 +57,13 @@ async function main() {
     );
 
     // Initialize `dbRoom`
-    await dbRoom.loadDatabase();
+    // await dbRoom.loadDatabase();
     dbRoom.data = rooms;
     await dbRoom.writeDatabase(rooms);
     console.log("dbRoom ok");
 
     // Initialize `dbCourse`
-    await dbCourse.loadDatabase();
+    // await dbCourse.loadDatabase();
     dbCourse.data = coursesCurrentTerm;
     await dbCourse.writeDatabase(coursesCurrentTerm);
     console.log("dbCourse ok");
@@ -79,7 +79,5 @@ app.listen(process.env.PORT, async () => {
     console.log(`Visit http://localhost:${process.env.PORT}`);
   }
 
-  await main();
-
-  console.log("'main()' finished.");
+  // await main();
 });

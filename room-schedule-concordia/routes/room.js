@@ -76,10 +76,13 @@ async function returnRoomsObj(dbRoom) {
 // All rooms route
 router.get("/", async (req, res) => {
   try {
+    if (!dbRoom.data) {
+      await dbRoom.loadDatabase();
+    }
     const roomsObj = await returnRoomsObj(dbRoom);
     res.send(roomsObj);
   } catch (err) {
-    console.error("ERROR in GET /room");
+    console.error("ERROR in GET /rooms");
     console.error(err);
     res.status(404);
   }
@@ -93,9 +96,14 @@ router.post("/room", async (req, res) => {
   searchOptions.buildingCode = req.body.buildingCode;
   searchOptions.room = req.body.room;
   try {
+    if (!dbCourse.data) {
+      await dbCourse.loadDatabase();
+    }
     const courses = await dbCourse.find(searchOptions);
     res.send(courses);
-  } catch {
+  } catch (err) {
+    console.error("ERROR in GET /rooms/room", searchOptions);
+    console.error(err);
     res.status(404);
   }
 });

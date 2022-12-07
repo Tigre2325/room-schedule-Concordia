@@ -35,7 +35,7 @@ Website to access the room schedule of Concordia University based in Montréal, 
 - [ ] Ensure app performance and reliability
   - [x] Avoid synchronous functions
   - [ ] Handle exceptions properly
-  - [ ] Set NODE_ENV to "production"
+  - [x] Set NODE_ENV to "production"
   - [ ] Automatic restart
 
 ### Later features

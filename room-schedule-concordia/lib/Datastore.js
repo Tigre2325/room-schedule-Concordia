@@ -8,11 +8,11 @@ const fs = require("node:fs");
 // Third-party modules and packages
 
 // Local modules and packages
-const AWS = require("aws-sdk");
+const aws = require("aws-sdk");
 
 //------------------------------------------------------------------------------
 // Global variables
-const s3 = new AWS.S3();
+const s3 = new aws.S3();
 
 //------------------------------------------------------------------------------
 // Functions
@@ -41,40 +41,6 @@ class Datastore {
     // } catch (err) {
     //   fs.writeFileSync(this.filePath, "[]");
     // }
-    // @ts-ignore
-    const paramsHead = {
-      Bucket: process.env.BUCKET,
-      Key: this.filePath,
-    };
-    // @ts-ignore
-    s3.headBucket(paramsHead, (err, data) => {
-      if (err) {
-        console.log(
-          `Creating empty body for bucket with key "${this.filePath}"`
-        );
-
-        // Create an empty body
-        const paramsPut = {
-          Body: "[]",
-          Bucket: process.env.BUCKET,
-          Key: this.filePath,
-        };
-        // @ts-ignore
-        s3.putObject(paramsPut, (err, data) => {
-          if (err) {
-            console.log(err, err.stack);
-          } else {
-            console.log(
-              `Successfull creation of empty body for "${this.filePath}"`
-            );
-            console.log(data);
-          }
-        });
-      } else {
-        console.log(`Successfull access to "${this.filePath}"`);
-        console.log(data);
-      }
-    });
   }
 
   /**

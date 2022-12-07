@@ -10,6 +10,7 @@
  */
 // @ts-ignore
 const tableRoomSchedule = document.getElementById("week-schedule");
+const originalTableHTML = tableRoomSchedule.innerHTML;
 
 const daysShort = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 const daysLong = [
@@ -146,6 +147,7 @@ async function generateTableBody(table, dayStart = 7, dayEnd = 24) {
 }
 
 async function generateTableRoomSchedule() {
+  tableRoomSchedule.innerHTML = originalTableHTML;
   await generateTableHeader(tableRoomSchedule);
   await generateTableBody(tableRoomSchedule);
 }

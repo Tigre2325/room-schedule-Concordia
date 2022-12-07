@@ -3,7 +3,6 @@
 //------------------------------------------------------------------------------
 // Modules
 // Node standard modules
-const path = require("node:path");
 
 // Third-party modules and packages
 
@@ -12,7 +11,6 @@ const Datastore = require("../lib/Datastore");
 
 //------------------------------------------------------------------------------
 // Global variables
-const { PATH_DATA_DIR } = require("../utils/constants");
 
 //------------------------------------------------------------------------------
 // Functions
@@ -22,7 +20,7 @@ const { PATH_DATA_DIR } = require("../utils/constants");
 
 class Room extends Datastore {
   constructor() {
-    super(path.join(PATH_DATA_DIR, "room.db"));
+    super("data/room.db");
   }
 }
 
